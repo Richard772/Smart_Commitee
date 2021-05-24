@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108778579981",
+    "project_id": "kamati-mkononi-59735",
+    "storage_bucket": "kamati-mkononi-59735.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108778579981:android:56b3293132472e3fd1cd44",
+        "android_client_info": {
+          "package_name": "com.richard.event_planner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108778579981-95e0psdfjbdcg8nqnu43o90v5f40pngv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnyQQvb2EEgpwBc4puLMbN51nygrLLX9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108778579981-95e0psdfjbdcg8nqnu43o90v5f40pngv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
