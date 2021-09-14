@@ -1,4 +1,3 @@
-import 'package:event_planner/Views/Categories.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ void main() async {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Event Planner",
-      home: Categories(),
+      home: OpeningView(),
 
     ),
   );

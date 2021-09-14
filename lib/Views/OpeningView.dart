@@ -9,16 +9,8 @@ class OpeningView extends StatelessWidget {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
 
-    final logo = Padding(
-      padding: EdgeInsets.all(20),
-      child: Image.asset(
-        "assets/artistic-ribbon-forming-tornado-shape-5601ld.png",
-        fit: BoxFit.cover,
-      ),
-    );
-
     final loginButton = Material(
-      color: Colors.blue[700],
+      color: Colors.black.withBlue(600),
       elevation: 4.5,
       borderRadius: BorderRadius.all(
         Radius.circular(20),
@@ -46,7 +38,7 @@ class OpeningView extends StatelessWidget {
     final registerButton = Padding(
       padding: EdgeInsets.only(top: 30),
       child: Material(
-        color: Colors.blue[700],
+        color: Colors.black.withBlue(600),
         elevation: 4.5,
         borderRadius: BorderRadius.all(
           Radius.circular(20),
@@ -74,7 +66,7 @@ class OpeningView extends StatelessWidget {
 
     // ignore: non_constant_identifier_names
     final Buttons = Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         loginButton,
@@ -83,15 +75,18 @@ class OpeningView extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.only(top: 20, bottom: 0, left: 35, right: 35),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            logo,
-            Buttons,
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.white38],
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+            tileMode: TileMode.clamp
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(top: 20, bottom: 30, left: 35, right: 35),
+          child: Buttons,
         ),
       ),
     );

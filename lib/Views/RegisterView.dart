@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planner/Flutter_Fire/Authentication.dart';
 import 'package:event_planner/Models/userSetup.dart';
-import 'package:event_planner/Views/Categories.dart';
 import 'package:event_planner/Views/Home.dart';
 import 'package:event_planner/Views/LoginView.dart';
 import 'package:event_planner/Views/OpeningView.dart';
@@ -14,7 +14,6 @@ class RegisterView extends StatefulWidget {
   _RegisterViewState createState() => _RegisterViewState();
 }
 
-final _formKey1 = GlobalKey<FormState>();
 final _isSubmitted = true;
 TextEditingController _emailInput = TextEditingController();
 TextEditingController _passwordInput = TextEditingController();
@@ -24,31 +23,47 @@ TextEditingController _userName = TextEditingController();
 class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
-    final logo = Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 5),
-      child: Image.asset(
-        "assets/artistic-ribbon-forming-tornado-shape-5601ld.png",
-        fit: BoxFit.cover,
+    final logo = SizedBox(
+      child: Expanded(
+        flex: 3,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 17.6),
+          child: Center(
+            child: Text(
+              "Sign Up!",
+              style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.black.withBlue(500),
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
       ),
+      height: MediaQuery.of(context).size.height * 0.32,
     );
 
     final userNameField = Padding(
       padding: EdgeInsets.only(
-        bottom: 20,
+        bottom: 25,
       ),
       child: TextFormField(
         enabled: _isSubmitted,
         controller: _userName,
-        autocorrect: true,
         autofocus: true,
-        style: TextStyle(color: Colors.black),
+        autocorrect: true,
         decoration: InputDecoration(
-          labelText: "username",
-          hintText: "someone",
-          hintStyle: TextStyle(
-            color: Colors.black38,
-          ),
-        ),
+            labelText: "username",
+            hintStyle: TextStyle(
+              color: Colors.black38,
+            ),
+            hintText: "someone",
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.4),
+              borderSide: BorderSide(color: Colors.white38, width: 13),
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always),
         keyboardType: TextInputType.emailAddress,
       ),
     );
@@ -58,14 +73,19 @@ class _RegisterViewState extends State<RegisterView> {
       controller: _emailInput,
       autocorrect: true,
       autofocus: true,
-      style: TextStyle(color: Colors.black),
       decoration: InputDecoration(
-        hintText: "someone@email.com",
-        labelText: "email",
-        hintStyle: TextStyle(
-          color: Colors.black38,
-        ),
-      ),
+          hintText: "someone@email.com",
+          hintStyle: TextStyle(
+            color: Colors.black38,
+          ),
+          labelText: "email",
+          labelStyle:
+              TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.4),
+            borderSide: BorderSide(color: Colors.white38, width: 13),
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always),
       keyboardType: TextInputType.emailAddress,
     );
 
@@ -82,14 +102,17 @@ class _RegisterViewState extends State<RegisterView> {
               controller: _passwordInput,
               autocorrect: true,
               autofocus: true,
+              obscureText: true,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
-                labelText: "password",
-                hintStyle: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              obscureText: true,
+                  labelText: "password",
+                  labelStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.4),
+                    borderSide: BorderSide(color: Colors.white38, width: 13),
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always),
             ),
           ),
           Padding(
@@ -99,14 +122,17 @@ class _RegisterViewState extends State<RegisterView> {
               controller: _confirmPassword,
               autocorrect: true,
               autofocus: true,
+              obscureText: true,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
-                labelText: "Confirm Password",
-                hintStyle: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              obscureText: true,
+                  labelText: "Confirm Password",
+                  labelStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.4),
+                    borderSide: BorderSide(color: Colors.white38, width: 13),
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.always),
             ),
           ),
         ],
@@ -114,7 +140,7 @@ class _RegisterViewState extends State<RegisterView> {
     );
 
     final fields = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         userNameField,
         emailField,
@@ -123,68 +149,40 @@ class _RegisterViewState extends State<RegisterView> {
     );
 
     final registerButton = Material(
-      color: Colors.blue[700],
+      color: Colors.black.withBlue(600),
       elevation: 4.5,
       borderRadius: BorderRadius.all(
         Radius.circular(20),
       ),
       child: MaterialButton(
-        child: Text(
-          "Register",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+          child: Text(
+            "Register",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
-        ),
-        onPressed: () async {
-          try {
-            if (_passwordInput.text == _confirmPassword.text &&
-                _userName.text.isNotEmpty) {
-              UserCredential user = await FirebaseAuth.instance
-                  .createUserWithEmailAndPassword(
-                      email: _emailInput.text, password: _passwordInput.text);
-
-              FirebaseAuth.instance.currentUser
-                  .updateProfile(displayName: _userName.text);
-              userSetup(_userName.text);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Home(),
-                ),
-              );
-            } else {
-              //TODO: Error alertDialog ,
-              print("passwords didi not match");
-            }
-          } catch (e) {
-            print(e);
-            _userName.clear();
-            _emailInput.clear();
-            _passwordInput.clear();
-            _confirmPassword.clear();
-
-          } on FirebaseAuthException catch (e) {
-            if (e.code == "weak-password") {
-              print("Your password is weak");
-            } else if (e.code == "email-already-in-use") {
-              print("this email already in use");
-            }
-          }
-        },
-      ),
+          onPressed: () async {
+            Register(_emailInput.text, _passwordInput.text, _userName.text);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Home(),
+              ),
+            );
+          }),
     );
 
     final bottom = Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         registerButton,
         Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Already having an account?"),
               MaterialButton(
@@ -194,7 +192,13 @@ class _RegisterViewState extends State<RegisterView> {
                     MaterialPageRoute(builder: (context) => LoginView()),
                   );
                 },
-                child: Text("Sign In"),
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blue[900],
+                  ),
+                ),
               ),
             ],
           ),
@@ -203,19 +207,22 @@ class _RegisterViewState extends State<RegisterView> {
     );
 
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.all(20),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey1,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              logo,
-              fields,
-              bottom,
-            ],
+        body: Container(
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Form(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                logo,
+                fields,
+                bottom,
+              ],
+            ),
           ),
         ),
       ),

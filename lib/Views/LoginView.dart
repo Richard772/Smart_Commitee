@@ -1,5 +1,4 @@
 import 'package:event_planner/Flutter_Fire/Authentication.dart';
-import 'package:event_planner/Views/Categories.dart';
 import 'package:event_planner/Views/RegisterView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +12,9 @@ class LoginView extends StatefulWidget {
   _LoginViewState createState() => _LoginViewState();
 }
 
+bool currentValue = false;
 final _isSubmitted = true;
-final _formKey = GlobalKey<FormState>();
+//final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 TextEditingController _emailInput = new TextEditingController();
 TextEditingController _passwordInput = new TextEditingController();
 
@@ -23,11 +23,16 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
 
-    final logo = Padding(
-      padding: EdgeInsets.all(20),
-      child: Image.asset(
-        "assets/artistic-ribbon-forming-tornado-shape-5601ld.png",
-        fit: BoxFit.cover,
+    final logo = Container(
+      height: MediaQuery.of(context).size.height * 0.32,
+      child: Center(
+        child: Text(
+          "Sign In",
+          style: TextStyle(
+              fontSize: 26,
+              color: Colors.black.withBlue(500),
+              fontWeight: FontWeight.bold),
+        ),
       ),
     );
 
@@ -36,13 +41,20 @@ class _LoginViewState extends State<LoginView> {
       controller: _emailInput,
       autocorrect: true,
       autofocus: true,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
       decoration: InputDecoration(
           hintText: "someone@email.com",
           labelText: "email",
           hintStyle: TextStyle(
-            color: Colors.black,
-          )),
+            color: Colors.black38,
+          ),
+          labelStyle:
+              TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.4),
+            borderSide: BorderSide(color: Colors.white38, width: 13),
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always),
       keyboardType: TextInputType.emailAddress,
     );
 
@@ -57,22 +69,50 @@ class _LoginViewState extends State<LoginView> {
             controller: _passwordInput,
             autocorrect: true,
             autofocus: true,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
-                hintText: "*********",
                 labelText: "password",
                 hintStyle: TextStyle(
-                  color: Colors.white,
-                )),
+                  color: Colors.black,
+                ),
+                labelStyle:
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.4),
+                  borderSide: BorderSide(color: Colors.white38, width: 13),
+                ),
+                floatingLabelBehavior: FloatingLabelBehavior.always),
             obscureText: true,
           ),
-          MaterialButton(
-            onPressed: () {},
-            child: Text(
-              "Forgot Password",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Checkbox(
+                        activeColor: Colors.blue,
+                        value: currentValue,
+                        onChanged: (bool newValue) {
+                          setState(() {
+                            currentValue = newValue;
+                          });
+                        }),
+                    Text("Remember Me"),
+                  ],
+                ),
+                MaterialButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Forgot Password",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -82,56 +122,46 @@ class _LoginViewState extends State<LoginView> {
     final fields = Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        emailField,
-        passwordField,
+        Padding(
+          padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+          child: emailField,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 7, bottom: 15.0),
+          child: passwordField,
+        ),
       ],
     );
 
     final loginButton = Material(
-      color: Colors.blue[700],
+      color: Colors.black.withBlue(600),
       elevation: 4.5,
       borderRadius: BorderRadius.all(
         Radius.circular(20),
       ),
       child: MaterialButton(
-        child: Text(
-          "Login",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+          child: Text(
+            "Login",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
-        ),
-        onPressed: () async {
-          try{await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: _emailInput.text, password: _passwordInput.text);
-          var user = FirebaseAuth.instance.currentUser;
-          if (user != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Home(),
-              ),
-            );
-          }
-          }catch (e){
-            print(e);
-            _emailInput.clear();
-            _passwordInput.clear();
-          }
-        },
-      ),
+          onPressed: () {
+            SignIn(_emailInput.text, _passwordInput.text);
+          }),
     );
 
     final bottom = Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         loginButton,
         Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Don't have an account yet?"),
               MaterialButton(
@@ -141,7 +171,13 @@ class _LoginViewState extends State<LoginView> {
                     MaterialPageRoute(builder: (context) => RegisterView()),
                   );
                 },
-                child: Text("Sign Up!"),
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blue[900],
+                  ),
+                ),
               ),
             ],
           ),
@@ -150,18 +186,21 @@ class _LoginViewState extends State<LoginView> {
     );
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                logo,
-                fields,
-                bottom,
-              ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            child: Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  logo,
+                  fields,
+                  bottom,
+                ],
+              ),
             ),
           ),
         ),

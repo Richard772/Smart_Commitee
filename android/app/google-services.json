@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "108778579981",
-    "project_id": "kamati-mkononi-59735",
-    "storage_bucket": "kamati-mkononi-59735.appspot.com"
+    "project_number": "110261521741",
+    "project_id": "chard-s-planner-4b602",
+    "storage_bucket": "chard-s-planner-4b602.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:108778579981:android:56b3293132472e3fd1cd44",
+        "mobilesdk_app_id": "1:110261521741:android:9a28788adf246d7d67bb04",
         "android_client_info": {
           "package_name": "com.richard.event_planner"
         }
       },
       "oauth_client": [
         {
-          "client_id": "108778579981-95e0psdfjbdcg8nqnu43o90v5f40pngv.apps.googleusercontent.com",
+          "client_id": "110261521741-v1p0uloonvr4luq3ltc4lurn7u1kg91k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCnyQQvb2EEgpwBc4puLMbN51nygrLLX9U"
+          "current_key": "AIzaSyAjoJ6TjghyFatGiwy9E4l5HC9vM7hFG7U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "108778579981-95e0psdfjbdcg8nqnu43o90v5f40pngv.apps.googleusercontent.com",
+              "client_id": "110261521741-v1p0uloonvr4luq3ltc4lurn7u1kg91k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
